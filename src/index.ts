@@ -1,7 +1,4 @@
-import { BrowserHistory } from "./BrowserHistory";
-import { MemoryHistory } from "./MemoryHistory";
-
-export {
-    BrowserHistory,
-    MemoryHistory,
-};
+export * from "./BrowserHistory";
+export * from "./MemoryHistory";
+export * from "./HistoryCore";
+export * from "./HistoryContext"
