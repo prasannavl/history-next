@@ -1,6 +1,7 @@
 {
   "name": "history-next",
   "version": false,
+  "main": "./lib/history-next.d.ts",
   "dependencies": {},
   "devDependencies": {},
   "ambientDevDependencies": {
