@@ -1,4 +1,10 @@
-import { HistoryListener, HistoryBeforeChangeListener, IHistoryContext, IHistory, HistoryListenerDelegate, HistoryBeforeChangeListenerDelegate } from "./HistorySpec";
+import {
+    HistoryListener,
+    HistoryBeforeChangeListener,
+    IHistoryContext,
+    IHistory,
+    HistoryListenerDelegate,
+    HistoryBeforeChangeListenerDelegate } from "./HistorySpec";
 
 export abstract class HistoryCore implements IHistory {
 
@@ -55,7 +61,8 @@ export abstract class HistoryCore implements IHistory {
     protected _processBeforeChange(context: IHistoryContext): Promise<boolean> {
         if (this._cachedBeforeChangeListenerPipelineFunc === null) {
             const cachedResult = Promise.resolve(true);
-            this._cachedBeforeChangeListenerPipelineFunc = this._buildPipeline(this._beforeChangeListeners.reverse(), () => cachedResult, "HistoryBeforeChangeListener");
+            this._cachedBeforeChangeListenerPipelineFunc = this._buildPipeline(
+                this._beforeChangeListeners.reverse(), () => cachedResult, "HistoryBeforeChangeListener");
         }
         return this._cachedBeforeChangeListenerPipelineFunc(context);
     }
