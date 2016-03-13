@@ -1,0 +1,23 @@
+{
+    "private": true,
+    "name": "history-next",
+    "version": "1.0",
+    "author": "Prasanna V. Loganathar <pvl@prasannavl.com> (http://www.prasannavl.com)",
+    "license": "Apache-2.0",
+    "description": "",
+    "main": "./index.ts",
+    "typings": "js/index",
+    "scripts": {
+        "test": "echo \"No tests available.\" && exit 0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/prasannavl/history-next.git"
+    },
+    "keywords": [
+    ],
+    "bugs": {
+        "url": "https://github.com/prasannavl/history-next/issues"
+    },
+    "homepage": "https://github.com/prasannavl/history-next#readme"
+}
