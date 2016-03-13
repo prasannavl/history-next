@@ -5,7 +5,6 @@
   "license": "Apache-2.0",
   "description": "A history component that providers asynchronous listeners with promises and provides a view of history for each listener with a context",
   "main": "./index",
-  "typings": "./src/HistorySpec.ts",
   "scripts": {
     "build": "./node_modules/.bin/tsc",
     "watch": "./node_modules/.bin/tsc -w",
