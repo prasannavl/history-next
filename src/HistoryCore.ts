@@ -1,10 +1,38 @@
-import {
-    HistoryListener,
-    HistoryBeforeChangeListener,
-    IHistoryContext,
-    IHistory,
-    HistoryListenerDelegate,
-    HistoryBeforeChangeListenerDelegate } from "./HistorySpec";
+import { IHistoryContext} from "./HistoryContext";
+
+export interface IHistory {
+    context: IHistoryContext;
+    length: number;
+    go(delta?: any): Promise<boolean>;
+    replace(url: string, state?: any): Promise<boolean>;
+    push(url: string, state?: any): Promise<boolean>;
+    replaceContext(context: IHistoryContext): Promise<boolean>;
+    pushContext(context: IHistoryContext): Promise<boolean>;
+    listen(listener: HistoryListener, frontline?: boolean): () => void;
+    listenBeforeChange(listener: HistoryBeforeChangeListener, frontline?: boolean): () => void;
+    start(): void;
+    dispose(): void;
+}
+
+export interface HistoryListenerDelegate {
+    (ctx: IHistoryContext): Promise<void>;
+}
+
+export interface HistoryListener {
+    (context: IHistoryContext, next: HistoryListenerDelegate): Promise<void>;
+}
+
+/*
+Returning false in the promise will prevent the change from happening.
+This can be used for confirmation, authentication, and so on.
+*/
+export interface HistoryBeforeChangeListenerDelegate {
+    (ctx: IHistoryContext): Promise<boolean>;
+}
+
+export interface HistoryBeforeChangeListener {
+    (context: IHistoryContext, next: HistoryBeforeChangeListenerDelegate): Promise<boolean>;
+}
 
 export abstract class HistoryCore implements IHistory {
 
@@ -77,7 +105,7 @@ export abstract class HistoryCore implements IHistory {
                 let nextFunc = next;
                 next = (context: IHistoryContext) => {
                     let res = (current as any)(context, nextFunc);
-                    if (typeof(process) !== "undefined")
+                    if (typeof (process) !== "undefined")
                         if (process.env.NODE_ENV !== "production") {
                             if (res === undefined || res.toString() !== "[object Promise]")
                                 throw new TypeError(`${pipeLineName} must return a Promise`);

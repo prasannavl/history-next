@@ -1,6 +1,5 @@
 import { HistoryCore } from "./HistoryCore";
-import { IHistoryContext } from "./HistorySpec";
-import { HistoryContext } from "./HistoryContext";
+import { IHistoryContext, HistoryContext } from "./HistoryContext";
 
 /*
     MemoryHistory - currently only provides just enough support for server-side rendering.

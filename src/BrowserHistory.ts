@@ -1,6 +1,5 @@
-import { HistoryListener, IHistoryContext, IHistory } from "./HistorySpec";
 import { HistoryCore } from "./HistoryCore";
-import { HistoryContext } from "./HistoryContext";
+import { IHistoryContext, HistoryContext } from "./HistoryContext";
 
 const POPSTATE_EVENT_KEY = "popstate";
 

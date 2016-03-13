@@ -5,11 +5,12 @@
         "target": "es5",
         "outDir": "./lib/",
         "noImplicitAny": true,
-        "noImplicitReturns": true
+        "noImplicitReturns": true,
+        "declaration": true
     },
-    "files": [
-        "./src/BrowserHistory",
-        "./src/MemoryHistory",
-        "./typings/main.d.ts"
+    "exclude": [
+        "node_modules",
+        "typings",
+        "lib"
     ]
 }
