@@ -1,0 +1,5 @@
+{
+    "name": "history-next",
+    "main": "./lib/index.d.ts",
+    "out": "./history-next.d.ts"
+}

@@ -8,7 +8,11 @@
   "scripts": {
     "build": "./node_modules/.bin/tsc",
     "watch": "./node_modules/.bin/tsc -w",
+    "build-dts": "./node_modules/.bin/dts-bundle --configJson dtsconfig.json",
     "test": "echo \"No tests available.\" && exit 0"
+  },
+  "typescript": {
+    "definition": "./lib/history-next.d.ts"
   },
   "repository": {
     "type": "git",
@@ -20,6 +24,7 @@
   },
   "homepage": "https://github.com/prasannavl/history-next#readme",
   "devDependencies": {
+    "dts-bundle": "^0.4.3",
     "typescript": "^1.8.7",
     "typings": "^0.7.8"
   }
