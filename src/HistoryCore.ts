@@ -77,10 +77,11 @@ export abstract class HistoryCore implements IHistory {
                 let nextFunc = next;
                 next = (context: IHistoryContext) => {
                     let res = (current as any)(context, nextFunc);
-                    if (process.env.NODE_ENV !== "production") {
-                        if (res === undefined || res.toString() !== "[object Promise]")
-                            throw new TypeError(`${pipeLineName} must return a Promise`);
-                    }
+                    if (typeof(process) !== "undefined")
+                        if (process.env.NODE_ENV !== "production") {
+                            if (res === undefined || res.toString() !== "[object Promise]")
+                                throw new TypeError(`${pipeLineName} must return a Promise`);
+                        }
                     return res;
                 };
                 i--;

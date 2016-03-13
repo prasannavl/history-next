@@ -28,7 +28,7 @@ export class BrowserHistory extends HistoryCore {
     }
 
     go(delta?: any) {
-        return this._processBeforeChange(null).then(change => {
+        return this._processBeforeChange(null).then((change: boolean) => {
             if (change) window.history.go(delta);
             return change;
         });
@@ -40,7 +40,7 @@ export class BrowserHistory extends HistoryCore {
     }
 
     replaceContext(context: IHistoryContext) {
-        return this._processBeforeChange(context).then(change => {
+        return this._processBeforeChange(context).then((change: boolean) => {
             if (change) {
                 window.history.replaceState(context.state, null, context.pathname);
                 return this._process(BrowserHistory.createContext()).then(() => true);
@@ -55,7 +55,7 @@ export class BrowserHistory extends HistoryCore {
     }
 
     pushContext(context: IHistoryContext) {
-        return this._processBeforeChange(context).then(change => {
+        return this._processBeforeChange(context).then((change: boolean) => {
             if (change) {
                 window.history.pushState(context.state, null, context.pathname);
                 return this._process(BrowserHistory.createContext()).then(() => true);

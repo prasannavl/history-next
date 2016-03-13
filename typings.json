@@ -1,0 +1,10 @@
+{
+  "name": "history-next",
+  "version": false,
+  "dependencies": {},
+  "devDependencies": {},
+  "ambientDevDependencies": {
+    "core-js": "registry:dt/core-js#0.0.0+20160215162030",
+    "node": "registry:dt/node#4.0.0+20160311162451"
+  }
+}
