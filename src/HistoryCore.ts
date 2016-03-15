@@ -15,7 +15,7 @@ export interface IHistory {
 }
 
 export interface HistoryListenerDelegate {
-    (ctx: IHistoryContext): Promise<void>;
+    (context: IHistoryContext): Promise<void>;
 }
 
 export interface HistoryListener {
@@ -27,7 +27,7 @@ Returning false in the promise will prevent the change from happening.
 This can be used for confirmation, authentication, and so on.
 */
 export interface HistoryBeforeChangeListenerDelegate {
-    (ctx: IHistoryContext): Promise<boolean>;
+    (context: IHistoryContext): Promise<boolean>;
 }
 
 export interface HistoryBeforeChangeListener {
