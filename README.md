@@ -5,11 +5,12 @@ A history component that providers asynchronous listeners with promises and prov
 > npm install history-next
 
 
-
 - **npm**: https://www.npmjs.com/package/history-next
 - **Github**: https://github.com/prasannavl/history-next
 
-> Works both on the browser and node environment.
+> Works both on the browser, webpack, browserify, and node (MemoryHistory).
+
+> Zero dependencies.
 
 Most api's that wrap the browser history like [rackt/history](https://github.com/rackt/history) does a great job of abstracting the it, but does not provide a contexual view of history. You are stuck to one view of the history for the entire set of application, or manually handling wrapping them further, which cascades a lot more problems. With chained contextual history, it becomes super easy to do stuff like contextual routing with ease, without the use of external routers, or to make awesome routers. 
 
