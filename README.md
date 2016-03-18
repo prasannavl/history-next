@@ -12,6 +12,12 @@ A history component that providers asynchronous listeners with promises and prov
 
 > Zero dependencies.
 
+##### Type definitions: 
+
+After installing from npm, 
+
+> typings install npm:history-next
+
 Most api's that wrap the browser history like [rackt/history](https://github.com/rackt/history) does a great job of abstracting the it, but does not provide a contexual view of history. You are stuck to one view of the history for the entire set of application, or manually handling wrapping them further, which cascades a lot more problems. With chained contextual history, it becomes super easy to do stuff like contextual routing with ease, without the use of external routers, or to make awesome routers. 
 
 This is an API that provides a contextual view, and also with promises that allows you to keep chaining history listeners along with a context. The `listenBeforeChange` also accepts promises so history changes can be paused, until callbacks (useful for animations and other validations and confirmations). 
