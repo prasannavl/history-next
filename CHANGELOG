@@ -1,3 +1,5 @@
+v1.0.15: 
+- Change: BrowserHistory: Switch HistoryCore's context along with pop state.
 v1.0.14:
-- Fix: Major bug in onBeforeChange listeners: The listener array was reversed accidentally. 
+- Fix: HistoryCore: Major bug in onBeforeChange listeners: Listener array was reversed accidentally. 
 - Fix: BrowserHistory: Change listeners were passed the same context during popstate.
