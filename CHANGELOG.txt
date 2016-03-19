@@ -1,5 +1,9 @@
+v1.0.16:
+- add: BrowserHistory: createNormalizedContext
+- add: HistoryContext: createNormalizedFromPath
+- utils: tools for trimming, and cleaning url slashes (used by normalized versions above)
 v1.0.15: 
-- Change: BrowserHistory: Switch HistoryCore's context along with pop state.
+- change: BrowserHistory: switch HistoryCore's context along with pop state
 v1.0.14:
-- Fix: HistoryCore: Major bug in onBeforeChange listeners: Listener array was reversed accidentally. 
-- Fix: BrowserHistory: Change listeners were passed the same context during popstate.
+- fix: HistoryCore: Major bug in onBeforeChange listeners: Listener array was reversed accidentally 
+- fix: BrowserHistory: Change listeners were passed the same context during popstate

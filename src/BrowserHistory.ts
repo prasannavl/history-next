@@ -1,5 +1,6 @@
 import { HistoryCore } from "./HistoryCore";
 import { IHistoryContext, HistoryContext } from "./HistoryContext";
+import { cleanPathNameSlashses } from "./utils";
 
 const POPSTATE_EVENT_KEY = "popstate";
 
@@ -14,6 +15,15 @@ export class BrowserHistory extends HistoryCore {
         const state = window.history.state;
 
         return new HistoryContext(url, pathname, queryString, hash, state);
+    }
+
+    /**
+     * Cleans up pathname as documented in utils/cleanPathNameSlashes  
+     */
+    static createNormalizedContext() {
+        const context = BrowserHistory.createContext();
+        context.pathname = cleanPathNameSlashses(context.pathname);
+        return context;
     }
 
     private _popStateListener: (ev: any) => void = null;

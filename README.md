@@ -7,6 +7,7 @@ A history component that providers asynchronous listeners with promises and prov
 
 - **npm**: https://www.npmjs.com/package/history-next
 - **Github**: https://github.com/prasannavl/history-next
+- **Changelog**: [history-next/CHANGELOG.txt](https://raw.githubusercontent.com/prasannavl/history-next/master/CHANGELOG.txt)
 
 > Works both on the browser, webpack, browserify, and node (MemoryHistory).
 

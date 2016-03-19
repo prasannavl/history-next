@@ -1,4 +1,4 @@
-import { getQueryString, getPathName, getHash } from "./utils";
+import { getQueryString, getPathName, cleanPathNameSlashses, getHash } from "./utils";
 
     export interface IHistoryContext {
         // The full url
@@ -50,6 +50,13 @@ export class HistoryContext implements IHistoryContext {
 
     static createFromPath(path: string, state: any = null) {
         return new HistoryContext(path, getPathName(path), getQueryString(path), getHash(path), state);
+    }
+
+    /**
+     * Cleans up pathname as documented in utils/cleanPathNameSlashes  
+     */
+    static createNormalizedFromPath(path: string, state: any = null) {
+        return new HistoryContext(path, cleanPathNameSlashses(getPathName(path)), getQueryString(path), getHash(path), state);
     }
 
     constructor(url: string, pathname: string, queryString: string, hash: string, state: any) {
