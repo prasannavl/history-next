@@ -1,0 +1,3 @@
+v1.0.14:
+- Fix: Major bug in onBeforeChange listeners: The listener array was reversed accidentally. 
+- Fix: BrowserHistory: Change listeners were passed the same context during popstate.

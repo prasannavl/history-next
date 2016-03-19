@@ -72,7 +72,8 @@ export class BrowserHistory extends HistoryCore {
             this.context = BrowserHistory.createContext();
 
         const handler = (ev: any) => {
-            this._process(this.context);
+            const context = BrowserHistory.createContext();
+            this._process(context);
         };
         window.addEventListener(POPSTATE_EVENT_KEY, handler);
         this._popStateListener = handler;

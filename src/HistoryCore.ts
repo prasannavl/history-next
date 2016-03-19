@@ -90,7 +90,7 @@ export abstract class HistoryCore implements IHistory {
         if (this._cachedBeforeChangeListenerPipelineFunc === null) {
             const cachedResult = Promise.resolve(true);
             this._cachedBeforeChangeListenerPipelineFunc = this._buildPipeline(
-                this._beforeChangeListeners.reverse(), () => cachedResult, "HistoryBeforeChangeListener");
+                this._beforeChangeListeners, () => cachedResult, "HistoryBeforeChangeListener");
         }
         return this._cachedBeforeChangeListenerPipelineFunc(context);
     }
