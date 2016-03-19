@@ -27,6 +27,8 @@ export class BrowserHistory extends HistoryCore {
     }
 
     private _popStateListener: (ev: any) => void = null;
+    public createContext: () => IHistoryContext = BrowserHistory.createContext;
+    public createContextFromPath: (path: string, state: any) => IHistoryContext = HistoryContext.createFromPath;
 
     constructor() {
         super();
@@ -34,10 +36,6 @@ export class BrowserHistory extends HistoryCore {
 
     get length() {
         return window.history.length;
-    }
-
-    createContext() {
-        return BrowserHistory.createContext();
     }
 
     go(delta?: any) {
@@ -48,7 +46,7 @@ export class BrowserHistory extends HistoryCore {
     }
 
     replace(path: string, state?: any) {
-        const context = HistoryContext.createFromPath(path, state);
+        const context = this.createContextFromPath(path, state);
         return this.replaceContext(context);
     }
 
@@ -63,7 +61,7 @@ export class BrowserHistory extends HistoryCore {
     }
 
     push(path: string, state?: any) {
-        const context = HistoryContext.createFromPath(path, state);
+        const context =  this.createContextFromPath(path, state);
         return this.pushContext(context);
     }
 
@@ -87,7 +85,7 @@ export class BrowserHistory extends HistoryCore {
 
         const handler = (ev: any) => {
             const context = this.createContext();
-            this.context = this.createContext();
+            this.context = context;
             this._process(context);
         };
         window.addEventListener(POPSTATE_EVENT_KEY, handler);
