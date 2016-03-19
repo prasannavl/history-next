@@ -1,7 +1,9 @@
-v1.0.16:
+v1.1.1:
+- fix: correct changelog
+v1.1.0:
 - add: BrowserHistory: createNormalizedContext
 - add: HistoryContext: createNormalizedFromPath
-- utils: tools for trimming, and cleaning url slashes (used by normalized versions above)
+- add: utils: tools for trimming, and cleaning url slashes (used by normalized versions above)
 v1.0.15: 
 - change: BrowserHistory: switch HistoryCore's context along with pop state
 v1.0.14:
