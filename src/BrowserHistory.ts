@@ -54,7 +54,8 @@ export class BrowserHistory extends HistoryCore {
         return this._processBeforeChange(context).then((change: boolean) => {
             if (change) {
                 window.history.replaceState(context.state, null, context.pathname);
-                return this._process(this.createContext()).then(() => true);
+                let contextFromBrowser = this.createAndSetContext();                
+                return this._process(contextFromBrowser).then(() => true);
             }
             return false;
         });
@@ -69,10 +70,17 @@ export class BrowserHistory extends HistoryCore {
         return this._processBeforeChange(context).then((change: boolean) => {
             if (change) {
                 window.history.pushState(context.state, null, context.pathname);
-                return this._process(this.createContext()).then(() => true);
+                let contextFromBrowser = this.createAndSetContext();
+                return this._process(contextFromBrowser).then(() => true);
             }
             return false;
         });
+    }
+
+    createAndSetContext() {
+        let context = this.createContext();
+        this.context = context;
+        return context;
     }
 
     dispose() {
