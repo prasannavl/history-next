@@ -1,3 +1,6 @@
+v1.2:
+- added: IHistory: previous context.
+- change: rename `frontline` parameter to align with DOM idiomatic `capture`.
 v1.1.3:
 - fix (critical): BrowserHistory: this.context wasn't updated.
 v1.1.2:

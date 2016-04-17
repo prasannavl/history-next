@@ -28,15 +28,16 @@ It provides a simple API surface that tries to stay close to the actual history 
 ```typescript
 export interface IHistory {
     context: IHistoryContext;
+    previous: IHistoryContext;
     length: number;
     go(delta?: any): Promise<boolean>;
     replace(url: string, state?: any): Promise<boolean>;
     push(url: string, state?: any): Promise<boolean>;
     replaceContext(context: IHistoryContext): Promise<boolean>;
     pushContext(context: IHistoryContext): Promise<boolean>;
-    listen(listener: HistoryListener, frontline?: boolean): () => void;
+    listen(listener: HistoryListener, capture?: boolean): () => void;
     listenBeforeChange(listener: 
-        HistoryBeforeChangeListener, frontline?: boolean): () => void;
+        HistoryBeforeChangeListener, capture?: boolean): () => void;
     start(): void;
     dispose(): void;
 }
@@ -113,4 +114,15 @@ Evidently, promises are required for it to work. Should work out of the box in E
 Provides the implementation for HTML5 history API, and a minimal memory history for server side rendering out of the box.
 A `HistoryCore` class is also exposed which does all the heavy lifting for the listener chaining logic. So, its very easy to create a new implementation by prototyping from `HistoryCore`. 
 
-Have a look at `MemoryHistory` and `BrowserHistory` implementation for details.  
+Have a look at `MemoryHistory` and `BrowserHistory` implementation for details.
+
+#### Notes
+
+- BrowserHistory: The before change listeners aren't executed when its changed through pop-state (browser buttons, for example).
+- BrowserHistory: The `capture` defaults to `true` for `beforeChange` and to `false` for `listen` listeners, since that's
+  generally what's expected out of it.
+
+If any of the above behavior doesn't suit you, you can simply subclass BrowserHistory, or even create your own by using the 
+lower level HistoryCore.
+
+The code is tiny, modular and has comments when required. Have a look directly if something's missing from the documentation.

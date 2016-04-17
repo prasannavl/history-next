@@ -54,7 +54,7 @@ export class BrowserHistory extends HistoryCore {
         return this._processBeforeChange(context).then((change: boolean) => {
             if (change) {
                 window.history.replaceState(context.state, null, context.pathname);
-                let contextFromBrowser = this.createAndSetContext();                
+                let contextFromBrowser = this.createAndSetContexts();
                 return this._process(contextFromBrowser).then(() => true);
             }
             return false;
@@ -70,16 +70,18 @@ export class BrowserHistory extends HistoryCore {
         return this._processBeforeChange(context).then((change: boolean) => {
             if (change) {
                 window.history.pushState(context.state, null, context.pathname);
-                let contextFromBrowser = this.createAndSetContext();
+                let contextFromBrowser = this.createAndSetContexts();
                 return this._process(contextFromBrowser).then(() => true);
             }
             return false;
         });
     }
 
-    createAndSetContext() {
+    createAndSetContexts() {
+        let prevContext = this.context;
         let context = this.createContext();
         this.context = context;
+        this.previous = prevContext;
         return context;
     }
 
@@ -90,10 +92,11 @@ export class BrowserHistory extends HistoryCore {
     start() {
         if (!this.context)
             this.context = this.createContext();
-
+        if (!this.previous)
+            this.previous = null;
+        
         const handler = (ev: any) => {
-            const context = this.createContext();
-            this.context = context;
+            let context = this.createAndSetContexts();
             this._process(context);
         };
         window.addEventListener(POPSTATE_EVENT_KEY, handler);

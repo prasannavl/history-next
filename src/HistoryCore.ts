@@ -2,14 +2,18 @@ import { IHistoryContext} from "./HistoryContext";
 
 export interface IHistory {
     context: IHistoryContext;
+    /*
+        Previous context if any, or else null
+    */
+    previous: IHistoryContext;
     length: number;
     go(delta?: any): Promise<boolean>;
     replace(url: string, state?: any): Promise<boolean>;
     push(url: string, state?: any): Promise<boolean>;
     replaceContext(context: IHistoryContext): Promise<boolean>;
     pushContext(context: IHistoryContext): Promise<boolean>;
-    listen(listener: HistoryListener, frontline?: boolean): () => void;
-    listenBeforeChange(listener: HistoryBeforeChangeListener, frontline?: boolean): () => void;
+    listen(listener: HistoryListener, capture?: boolean): () => void;
+    listenBeforeChange(listener: HistoryBeforeChangeListener, capture?: boolean): () => void;
     start(): void;
     dispose(): void;
 }
@@ -38,6 +42,7 @@ export abstract class HistoryCore implements IHistory {
 
     context: IHistoryContext;
     length: number;
+    previous: IHistoryContext;
 
     private _listeners: HistoryListener[];
     private _beforeChangeListeners: HistoryBeforeChangeListener[];
@@ -58,22 +63,22 @@ export abstract class HistoryCore implements IHistory {
     abstract replaceContext(context: IHistoryContext): Promise<boolean>;
     abstract pushContext(context: IHistoryContext): Promise<boolean>;
 
-    listen(listener: HistoryListener, frontline: boolean = false) {
+    listen(listener: HistoryListener, capture: boolean = false) {
         const disposable = () => {
             const index = this._listeners.indexOf(listener);
             this._listeners.splice(index, 1);
         };
-        frontline ? this._listeners.unshift(listener) : this._listeners.push(listener);
+        capture ? this._listeners.unshift(listener) : this._listeners.push(listener);
         this._cachedListenerPipelineFunc = null;
         return disposable;
     }
 
-    listenBeforeChange(listener: HistoryBeforeChangeListener, frontline: boolean = true) {
+    listenBeforeChange(listener: HistoryBeforeChangeListener, capture: boolean = true) {
         const disposable = () => {
             const index = this._beforeChangeListeners.indexOf(listener);
             this._beforeChangeListeners.splice(index, 1);
         };
-        frontline ? this._beforeChangeListeners.unshift(listener) : this._beforeChangeListeners.push(listener);
+        capture ? this._beforeChangeListeners.unshift(listener) : this._beforeChangeListeners.push(listener);
         this._cachedBeforeChangeListenerPipelineFunc = null;
         return disposable;
     }
