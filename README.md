@@ -32,7 +32,8 @@ export interface IHistory {
     replaceContext(context: IHistoryContext): Promise<boolean>;
     pushContext(context: IHistoryContext): Promise<boolean>;
     listen(listener: HistoryListener, capture?: boolean): () => void;
-    listenBeforeChange(listener: HistoryBeforeChangeListener, capture?: boolean): () => void;
+    listenBeforeChange(listener: HistoryBeforeChangeListener,
+        capture?: boolean): () => void;
     start(): void;
     dispose(): void;
 }
@@ -114,12 +115,12 @@ The code is tiny, modular and has comments when required. Have a look directly i
 
 ##### Historical Notes
 
-**Initial Conception: **
+**Initial Conception:**
 
 Most api's that wrap the browser history like [rackt/history](https://github.com/rackt/history) does a great job of abstracting the it, but does not provide a contexual view of history. You are stuck to one view of the history for the entire set of application, or manually handling wrapping them further, which cascades a lot more problems. With chained contextual history, it becomes super easy to do stuff like contextual routing with ease, without the use of external routers, or to make awesome routers. 
 
 This is an API that provides a contextual view, and also with promises that allows you to keep chaining history listeners along with a context. The `listenBeforeChange` also accepts promises so history changes can be paused, until callbacks (useful for animations and other validations and confirmations). 
 
-**Today: **
+**Today:**
 
 *This above is no longer the case starting from v2.0*, as it was learnt that it was far simpler and easier to reason with to deal with contexts, in the application level than at the history api. However, history API's like the above still seems overtly complex for my taste and the code, highly confusing with too many moving parts for just a history abstraction. This library accomplishes all of it, and provides the extension patterns for the anything missing as well cleanly.
