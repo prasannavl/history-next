@@ -84,7 +84,7 @@ export abstract class HistoryCore implements IHistory {
 
     private _runBeforeChangeListenerChain(index: number, context: IHistoryContext): Promise<boolean> {
         let listener = this._beforeChangeListeners[index];
-        if (listener !== null) {
+        if (listener) {
             return listener(context)
                 .then(x => {
                     if (x) return this._runBeforeChangeListenerChain(index + 1, context);
