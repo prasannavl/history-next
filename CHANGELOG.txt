@@ -1,3 +1,12 @@
+v2.0.0: 
+- Major breaking changes.
+- No longer provides a view of the context, as it first conceived. Handling the
+contextual layers in the application is far simpler, and more easily reasoned with.
+- The API has been simplified (due to the above), and Listeners now are directly of type
+ HistoryListenerDelegate, and so it simply returns a promise. There's no longer
+ a need to call `next(context)`.
+- However, the context API is kept the same, for now.
+- IHistory.context has been renamed to IHistory.current
 v1.2:
 - added: IHistory: previous context.
 - change: rename `frontline` parameter to align with DOM idiomatic `capture`.

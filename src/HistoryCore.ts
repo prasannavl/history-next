@@ -9,13 +9,13 @@ export interface IHistory {
     push(url: string, state?: any): Promise<boolean>;
     replaceContext(context: IHistoryContext): Promise<boolean>;
     pushContext(context: IHistoryContext): Promise<boolean>;
-    listen(listener: HistoryListenerDelegate, capture?: boolean): () => void;
-    listenBeforeChange(listener: HistoryBeforeChangeListenerDelegate, capture?: boolean): () => void;
+    listen(listener: HistoryListener, capture?: boolean): () => void;
+    listenBeforeChange(listener: HistoryBeforeChangeListener, capture?: boolean): () => void;
     start(): void;
     dispose(): void;
 }
 
-export interface HistoryListenerDelegate {
+export interface HistoryListener {
     (context: IHistoryContext): Promise<void>;
 }
 
@@ -23,7 +23,7 @@ export interface HistoryListenerDelegate {
 Returning false in the promise will prevent the change from happening.
 This can be used for confirmation, authentication, and so on.
 */
-export interface HistoryBeforeChangeListenerDelegate {
+export interface HistoryBeforeChangeListener {
     (context: IHistoryContext): Promise<boolean>;
 }
 
@@ -33,8 +33,8 @@ export abstract class HistoryCore implements IHistory {
     length: number;
     previous: IHistoryContext;
     
-    _listeners: Array<HistoryListenerDelegate>;
-    _beforeChangeListeners: Array<HistoryBeforeChangeListenerDelegate>;
+    _listeners: Array<HistoryListener>;
+    _beforeChangeListeners: Array<HistoryBeforeChangeListener>;
     
     constructor() {
         this._listeners = [];
@@ -49,11 +49,11 @@ export abstract class HistoryCore implements IHistory {
     abstract replaceContext(context: IHistoryContext): Promise<boolean>;
     abstract pushContext(context: IHistoryContext): Promise<boolean>;
     
-    listen(listener: HistoryListenerDelegate, capture: boolean = false) {
+    listen(listener: HistoryListener, capture: boolean = false) {
         return this._addListener(this._listeners, listener, capture);
     }
 
-    listenBeforeChange(listener: HistoryBeforeChangeListenerDelegate, capture: boolean = true) {
+    listenBeforeChange(listener: HistoryBeforeChangeListener, capture: boolean = true) {
         return this._addListener(this._beforeChangeListeners, listener, capture);
     }
 
