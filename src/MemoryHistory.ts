@@ -31,7 +31,7 @@ export class MemoryHistory extends HistoryCore {
     dispose() { }
 
     setContext(context: IHistoryContext) {
-        this.context = context;
+        this.current = context;
     }
 }
 

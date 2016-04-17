@@ -1,10 +1,7 @@
-import { IHistoryContext} from "./HistoryContext";
+import { IHistoryContext } from "./HistoryContext";
 
 export interface IHistory {
-    context: IHistoryContext;
-    /*
-        Previous context if any, or else null
-    */
+    current: IHistoryContext;
     previous: IHistoryContext;
     length: number;
     go(delta?: any): Promise<boolean>;
@@ -12,18 +9,14 @@ export interface IHistory {
     push(url: string, state?: any): Promise<boolean>;
     replaceContext(context: IHistoryContext): Promise<boolean>;
     pushContext(context: IHistoryContext): Promise<boolean>;
-    listen(listener: HistoryListener, capture?: boolean): () => void;
-    listenBeforeChange(listener: HistoryBeforeChangeListener, capture?: boolean): () => void;
+    listen(listener: HistoryListenerDelegate, capture?: boolean): () => void;
+    listenBeforeChange(listener: HistoryBeforeChangeListenerDelegate, capture?: boolean): () => void;
     start(): void;
     dispose(): void;
 }
 
 export interface HistoryListenerDelegate {
     (context: IHistoryContext): Promise<void>;
-}
-
-export interface HistoryListener {
-    (context: IHistoryContext, next: HistoryListenerDelegate): Promise<void>;
 }
 
 /*
@@ -34,22 +27,15 @@ export interface HistoryBeforeChangeListenerDelegate {
     (context: IHistoryContext): Promise<boolean>;
 }
 
-export interface HistoryBeforeChangeListener {
-    (context: IHistoryContext, next: HistoryBeforeChangeListenerDelegate): Promise<boolean>;
-}
-
 export abstract class HistoryCore implements IHistory {
-
-    context: IHistoryContext;
+    
+    current: IHistoryContext;
     length: number;
     previous: IHistoryContext;
-
-    private _listeners: HistoryListener[];
-    private _beforeChangeListeners: HistoryBeforeChangeListener[];
-
-    private _cachedListenerPipelineFunc: HistoryListenerDelegate = null;
-    private _cachedBeforeChangeListenerPipelineFunc: HistoryBeforeChangeListenerDelegate = null;
-
+    
+    _listeners: Array<HistoryListenerDelegate>;
+    _beforeChangeListeners: Array<HistoryBeforeChangeListenerDelegate>;
+    
     constructor() {
         this._listeners = [];
         this._beforeChangeListeners = [];
@@ -62,64 +48,54 @@ export abstract class HistoryCore implements IHistory {
     abstract push(url: string, state?: any): Promise<boolean>;
     abstract replaceContext(context: IHistoryContext): Promise<boolean>;
     abstract pushContext(context: IHistoryContext): Promise<boolean>;
-
-    listen(listener: HistoryListener, capture: boolean = false) {
-        const disposable = () => {
-            const index = this._listeners.indexOf(listener);
-            this._listeners.splice(index, 1);
-        };
-        capture ? this._listeners.unshift(listener) : this._listeners.push(listener);
-        this._cachedListenerPipelineFunc = null;
-        return disposable;
+    
+    listen(listener: HistoryListenerDelegate, capture: boolean = false) {
+        return this._addListener(this._listeners, listener, capture);
     }
 
-    listenBeforeChange(listener: HistoryBeforeChangeListener, capture: boolean = true) {
-        const disposable = () => {
-            const index = this._beforeChangeListeners.indexOf(listener);
-            this._beforeChangeListeners.splice(index, 1);
+    listenBeforeChange(listener: HistoryBeforeChangeListenerDelegate, capture: boolean = true) {
+        return this._addListener(this._beforeChangeListeners, listener, capture);
+    }
+
+    private _addListener<T>(target: Array<T>, listener: T, capture: boolean) {
+        if (capture) {
+            target.unshift(listener);
+        } else {
+            target.push(listener);
+        }
+        return () => {
+            // Note: Do not use the return index from above. Since,
+            // the index could be different.
+            let index = target.findIndex(x => x === listener);
+            if (index) {
+                target.splice(index, 1); 
+            }
         };
-        capture ? this._beforeChangeListeners.unshift(listener) : this._beforeChangeListeners.push(listener);
-        this._cachedBeforeChangeListenerPipelineFunc = null;
-        return disposable;
     }
 
     protected _process(context: IHistoryContext) {
-        if (this._cachedListenerPipelineFunc === null) {
-            const cachedResult = Promise.resolve();
-            this._cachedListenerPipelineFunc = this._buildPipeline(this._listeners, () => cachedResult, "HistoryListener");
-        }
-        return this._cachedListenerPipelineFunc(context);
+        let listenerCallPromises = this._listeners.map(x => x(context));
+        return Promise.all(listenerCallPromises);
     }
 
     protected _processBeforeChange(context: IHistoryContext): Promise<boolean> {
-        if (this._cachedBeforeChangeListenerPipelineFunc === null) {
-            const cachedResult = Promise.resolve(true);
-            this._cachedBeforeChangeListenerPipelineFunc = this._buildPipeline(
-                this._beforeChangeListeners, () => cachedResult, "HistoryBeforeChangeListener");
-        }
-        return this._cachedBeforeChangeListenerPipelineFunc(context);
+        return this._runBeforeChangeListenerChain(0, context);
     }
 
-    private _buildPipeline(listeners: any[], defaultFunc: any, pipeLineName: string): any {
-        const len = listeners.length;
-        let next = defaultFunc;
-        if (len > 0) {
-            let i = len - 1;
-            while (i > -1) {
-                let current = listeners[i];
-                let nextFunc = next;
-                next = (context: IHistoryContext) => {
-                    let res = (current as any)(context, nextFunc);
-                    if (typeof (process) !== "undefined")
-                        if (process.env.NODE_ENV !== "production") {
-                            if (res === undefined || res.toString() !== "[object Promise]")
-                                throw new TypeError(`${pipeLineName} must return a Promise`);
-                        }
-                    return res;
-                };
-                i--;
-            }
+    private _runBeforeChangeListenerChain(index: number, context: IHistoryContext): Promise<boolean> {
+        let listener = this._beforeChangeListeners[index];
+        if (listener !== null) {
+            return listener(context)
+                .then(x => {
+                    if (x) return this._runBeforeChangeListenerChain(index + 1, context);
+                    else return StaticCache.PromiseFalse;
+                });
         }
-        return next;
+        return StaticCache.PromiseTrue;
     }
+}
+
+class StaticCache {
+    static PromiseFalse = Promise.resolve(false);
+    static PromiseTrue = Promise.resolve(true);
 }

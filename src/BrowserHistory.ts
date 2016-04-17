@@ -78,9 +78,9 @@ export class BrowserHistory extends HistoryCore {
     }
 
     createAndSetContexts() {
-        let prevContext = this.context;
+        let prevContext = this.current;
         let context = this.createContext();
-        this.context = context;
+        this.current = context;
         this.previous = prevContext;
         return context;
     }
@@ -90,8 +90,8 @@ export class BrowserHistory extends HistoryCore {
     }
 
     start() {
-        if (!this.context)
-            this.context = this.createContext();
+        if (!this.current)
+            this.current = this.createContext();
         if (!this.previous)
             this.previous = null;
         
