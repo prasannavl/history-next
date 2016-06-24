@@ -2,6 +2,8 @@
 
 A history component that providers asynchronous listeners with promises.
 
+[![Build Status](https://travis-ci.org/prasannavl/history-next.svg?branch=master)](https://travis-ci.org/prasannavl/history-next)
+
 > npm install history-next
 
 
