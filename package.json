@@ -1,7 +1,6 @@
 {
   "name": "history-next",
-  "version": "2.0.1",
-  "author": "Prasanna V. Loganathar <pvl@prasannavl.com> (http://www.prasannavl.com)",
+  "author": "Prasanna V. Loganathar <pvl@prasannavl.com> (https://www.prasannavl.com)",
   "license": "Apache-2.0",
   "description": "A history component that providers asynchronous listeners with promises",
   "main": "./lib/index",
@@ -10,14 +9,15 @@
     "build": "npm run clean && npm run tsc",
     "tsc": "./node_modules/.bin/tsc",
     "watch": "./node_modules/.bin/tsc -w",
-    "test": "echo \"No tests available.\" && exit 0"
+    "test": "echo \"No tests available.\" && exit 0",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "typescript": {
     "definition": "./lib/index.d.ts"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/prasannavl/history-next.git"
+    "url": "https://github.com/prasannavl/history-next.git"
   },
   "keywords": [],
   "bugs": {
@@ -27,6 +27,10 @@
   "devDependencies": {
     "rimraf": "^2.5.2",
     "typescript": "^1.8.7",
-    "typings": "^0.7.10"
+    "typings": "^0.7.10",
+    "semantic-release": "^4.3.5"
+  },
+  "release": {
+    "debug": false
   }
 }
