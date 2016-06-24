@@ -1,7 +1,7 @@
 {
   "name": "history-next",
   "author": "Prasanna V. Loganathar <pvl@prasannavl.com> (https://www.prasannavl.com)",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "license": "Apache-2.0",
   "description": "A history component that providers asynchronous listeners with promises",
   "main": "./lib/index",
