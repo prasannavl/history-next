@@ -24,6 +24,7 @@ branches:
   except:
   - "/^v\\d+\\.\\d+\\.\\d+$/"
 deploy:
+  skip_cleanup: true
   provider: npm
   email: pvl@prasannavl.com
   api_key:
