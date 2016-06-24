@@ -3,7 +3,7 @@ language: node_js
 node_js:
 - '6'
 env:
-  - CXX=g++-4.8
+- CXX=g++-4.8
 addons:
   apt:
     sources:
@@ -12,15 +12,22 @@ addons:
     - g++-4.8
 cache:
   directories:
-    - node_modules
+  - node_modules
 before_install:
-  - npm i -g npm@^2.0.0
+- npm i -g npm@^2.0.0
 before_script:
-  - npm prune
-  - npm run ready-env
-script: 
-  - npm run build
-after_success:
+- npm prune
+- npm run ready-env
+script:
+- npm run build
 branches:
   except:
-    - /^v\d+\.\d+\.\d+$/
+  - "/^v\\d+\\.\\d+\\.\\d+$/"
+deploy:
+  provider: npm
+  email: pvl@prasannavl.com
+  api_key:
+    secure: Gd5lD4J0ua48S0gHkHC5Er3zXHN6z04S9oMGrrUo8iL48+GwFCNyDUqNXOx5ywNeS/ldBf8XSg7xizjJFKyFyAjXLFoFm5P9kwmSNNBhn/tbY4uLp9VEVdSq2PXqwac0G6EDkZOKQs5WdKodJhmsmKwCprvg7BS/v0L7nmwTF86kMYlGGwnAeBpABq+YN0G9ykV5P+N775EqRQossET4uN6HEEJLPlzqnzh8mDUVXBN/ROMqkQ4EAhb002xlXRLH48SoZXOII+9Rsft05ORNQ3Oy0G4uxt2sYMS+Pb6bMEZt6HHcQXIkJBkGNlUEG1RV/W5nJwvbRgfj7fDvGa7DC3UnIUWoc+fSDsQA4nFOm2CFGiZzcl2v0ubGBI2gjVccZLnlTuaS9L+2SehLVLfP34Tk67sboJ/PCXMshy6DBdkPxUz+92Pn4mG0fa+hQ5dK7gMr0LBtI7g9sofsGUPuiIo0hhAenf4q8/BN4I6WdsWVGYSd0Ulxn4FKCirwowAC7Rsf2lp4qqI2QS/sqGp0W3BhDQH2gLZSR6Uk1FNJzVHeXV+PsGuHHsdrtiGLogJZxT4+b6v1tnXhjZPyUPcnC9Kr6XoPihSkPvMSqiF2XDZd/Zcl8foqtSGjTWJ12WIb4vwBGvtRurD4/zaEUJKhk4pqNbN+p1wGF2jrgxwYz3U=
+  on:
+    tags: true
+    repo: prasannavl/history-next

@@ -11,8 +11,7 @@
     "tsc": "./node_modules/.bin/tsc",
     "watch": "./node_modules/.bin/tsc -w",
     "ready-env": "typings install",
-    "test": "echo \"No tests available.\" && exit 0",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "test": "echo \"No tests available.\" && exit 0"
   },
   "typescript": {
     "definition": "./lib/index.d.ts"
