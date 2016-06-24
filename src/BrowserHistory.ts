@@ -86,6 +86,7 @@ export class BrowserHistory extends HistoryCore {
     }
 
     dispose() {
+        super.dispose();
         if (this._popStateListener) window.removeEventListener(POPSTATE_EVENT_KEY, this._popStateListener);
     }
 

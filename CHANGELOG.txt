@@ -1,3 +1,5 @@
+v2.0.1:
+- Fix: Add better dispose semantics, with removing listeners and full cleanup
 v2.0.0: 
 - Major breaking changes.
 - No longer provides a view of the context, as it first conceived. Handling the

@@ -42,7 +42,6 @@ export abstract class HistoryCore implements IHistory {
     }
 
     abstract start(): void;
-    abstract dispose(): void;
     abstract go(delta?: any): Promise<boolean>;
     abstract replace(url: string, state?: any): Promise<boolean>;
     abstract push(url: string, state?: any): Promise<boolean>;
@@ -55,6 +54,14 @@ export abstract class HistoryCore implements IHistory {
 
     listenBeforeChange(listener: HistoryBeforeChangeListener, capture: boolean = true) {
         return this._addListener(this._beforeChangeListeners, listener, capture);
+    }
+
+    dispose() {
+        this._listeners = [];
+        this._beforeChangeListeners = [];
+        this.length = 0;
+        this.previous = null;
+        this.current = null;
     }
 
     private _addListener<T>(target: Array<T>, listener: T, capture: boolean) {
