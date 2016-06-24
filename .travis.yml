@@ -10,8 +10,9 @@ node_js:
 before_install:
   - npm i -g npm@^2.0.0
 before_script:
-  - npm run build
   - npm prune
+  - npm run ready-env
+  - npm run build
 after_success:
   - npm run semantic-release
 branches:
