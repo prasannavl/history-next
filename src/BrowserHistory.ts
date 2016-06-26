@@ -53,7 +53,7 @@ export class BrowserHistory extends HistoryCore {
     replaceContext(context: IHistoryContext) {
         return this._processBeforeChange(context).then((change: boolean) => {
             if (change) {
-                window.history.replaceState(context.state, null, context.pathname);
+                window.history.replaceState(context.state, null, context.url);
                 let contextFromBrowser = this.createAndSetContexts();
                 return this._process(contextFromBrowser).then(() => true);
             }
@@ -69,7 +69,7 @@ export class BrowserHistory extends HistoryCore {
     pushContext(context: IHistoryContext) {
         return this._processBeforeChange(context).then((change: boolean) => {
             if (change) {
-                window.history.pushState(context.state, null, context.pathname);
+                window.history.pushState(context.state, null, context.url);
                 let contextFromBrowser = this.createAndSetContexts();
                 return this._process(contextFromBrowser).then(() => true);
             }

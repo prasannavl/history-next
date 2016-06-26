@@ -1,3 +1,5 @@
+v2.0.7:
+- Fix: BrowserHistory: Pass the whole url, not just the path name 
 v2.0.2:
 - Fix: Add better dispose semantics, with removing listeners and full cleanup
 v2.0.0: 
