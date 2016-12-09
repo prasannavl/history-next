@@ -1,11 +1,11 @@
 {
   "name": "history-next",
   "author": "Prasanna V. Loganathar <pvl@prasannavl.com> (https://www.prasannavl.com)",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "license": "Apache-2.0",
   "description": "A history component that providers asynchronous listeners with promises",
   "main": "./lib/index",
-  "types": "./lib/index.d.ts",  
+  "types": "./lib/index.d.ts",
   "scripts": {
     "clean": "./node_modules/.bin/rimraf lib/*",
     "build": "npm run clean && npm run tsc",
