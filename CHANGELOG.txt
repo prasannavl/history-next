@@ -1,3 +1,6 @@
+v2.0.8:
+- tools: remove typings and switch to the native support starting from typescript 2
+- deps: update all dependencies
 v2.0.7:
 - Fix: BrowserHistory: Pass the whole url, not just the path name 
 v2.0.2:

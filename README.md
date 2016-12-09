@@ -17,9 +17,7 @@ A history component that providers asynchronous listeners with promises.
 
 ##### Type definitions
 
-After installing from npm,
-
-> typings install npm:history-next
+> In-built. TypeScript 2 and later should pick it up natively with no effort.
 
 It provides a simple API surface that tries to stay close to the actual history API, with extras.
 
