@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/prasannavl/history-next#readme",
   "devDependencies": {
-    "@types/core-js": "^0.9.35",
     "rimraf": "^2.5.4",
     "typescript": "^2.1.4"
   }

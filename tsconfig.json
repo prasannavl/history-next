@@ -3,6 +3,10 @@
         "module": "commonjs",
         "jsx": "react",
         "target": "es5",
+        "lib": [
+            "es6",
+            "dom"
+        ],
         "outDir": "./lib/",
         "noImplicitAny": true,
         "noImplicitReturns": true,
