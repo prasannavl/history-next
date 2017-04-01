@@ -1,3 +1,6 @@
+v2.1:
+- deps: update
+= removed: utils from the default export. Utils can be used by explicity importing from "lib/utils"
 v2.0.10-11:
 - deps: remove core-js. Configure to use ts libs instead.
 v2.0.8:
