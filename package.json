@@ -11,7 +11,8 @@
     "build": "npm run clean && npm run tsc",
     "tsc": "./node_modules/.bin/tsc",
     "watch": "./node_modules/.bin/tsc -w",
-    "test": "echo \"No tests available.\" && exit 0"
+    "test": "echo \"No tests available.\" && exit 0",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
